@@ -46,9 +46,65 @@ document.querySelector('#budget').addEventListener('change', function handleSele
   }
 });
 
+// плавный переход к форме
+function addSmoothScroll(anchor) {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+ 
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+}
+ 
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  addSmoothScroll(anchor);
+});
 
 
+addSmoothScroll(document.querySelector('.more-button'));
 
-// тестовое
-function doSomething(sizes) {   let el = document.createElement("div");   el.style.width = sizes.w + "px";   el.style.height = sizes.h + "px";   el.style.border = "1px dotted black";   el.style.borderRadius = sizes.r + "%";   el.style.position = "fixed";   el.style.left = window.innerWidth - sizes.w + "px";   el.style.top = window.innerHeight - sizes.h + "px";   return el; }
-document.body.appendChild(doSomething({w: 100, h: 200, r: 50}));
+function updateScroll() {
+  if (window.scrollY > 0) {
+    document.querySelector('header').classList.add('header__scrolled');
+  } else {
+    document.querySelector('header').classList.remove('header__scrolled');
+  }
+}
+
+window.addEventListener('scroll', updateScroll);
+
+function updateScroll() {
+  if (window.scrollY > 0) {
+    document.querySelector('header').classList.add('header__scrolled');
+  } else {
+    document.querySelector('header').classList.remove('header__scrolled');
+  }
+ 
+  // Запуск анимации увеличения числа
+  let windowBottomPosition = window.scrollY + window.innerHeight;
+  let countElementPosition = document.querySelector('.features__clients-count').offsetTop;
+  if (windowBottomPosition >= countElementPosition) {
+    initIncreaseNumberAnimation();
+  }
+}
+
+function updateScroll() {
+  if (window.scrollY > 0) {
+    document.querySelector('header').classList.add('header__scrolled');
+  } else {
+    document.querySelector('header').classList.remove('header__scrolled');
+  }
+ 
+  // Запуск анимации увеличения числа
+  let windowBottomPosition = window.scrollY + window.innerHeight;
+  let countElementPosition = document.querySelector('.features__clients-count').offsetTop;
+  if (windowBottomPosition >= countElementPosition && !animationInited) {
+    animationInited = true;
+    initIncreaseNumberAnimation();
+  }
+}
+ 
+window.addEventListener('scroll', updateScroll);
+
+// анимация canvas (пузырьки)
